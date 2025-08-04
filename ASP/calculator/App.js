@@ -1,4 +1,7 @@
 // FileName: App.js
+//npx create-react-app <<Project_Name>>
+//cd  <<Project_Name>>
+//npm install mathjs
 
 import React, { useState } from "react";
 import "./App.css";
