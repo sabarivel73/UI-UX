@@ -1,0 +1,95 @@
+🧩 Step 1: Create Project
+Open Visual Studio
+
+Create a new project → ASP.NET Core Web App (Model-View-Controller)
+
+Name it: SimpleResumeApp
+
+Use .NET 6.0 or later
+
+Click Create
+
+🔹 Step 2: Create Model
+Models > Resume.cs
+
+csharp
+Copy
+Edit
+namespace SimpleResumeApp.Models
+{
+    public class Resume
+    {
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Summary { get; set; }
+        public List<string> Skills { get; set; }
+    }
+}
+🔹 Step 3: Create Controller
+Controllers > ResumeController.cs
+
+csharp
+Copy
+Edit
+using Microsoft.AspNetCore.Mvc;
+using SimpleResumeApp.Models;
+using System.Collections.Generic;
+
+namespace SimpleResumeApp.Controllers
+{
+    public class ResumeController : Controller
+    {
+        public IActionResult Index()
+        {
+            var myResume = new Resume
+            {
+                Name = "John Doe",
+                Title = "Software Engineer",
+                Summary = "A passionate developer with 3+ years of experience in web development.",
+                Skills = new List<string> { "C#", "ASP.NET Core", "HTML", "CSS", "JavaScript" }
+            };
+
+            return View(myResume);
+        }
+    }
+}
+🔹 Step 4: Create View
+Views > Resume > Index.cshtml
+
+(If Resume folder doesn’t exist under Views, create it.)
+
+html
+Copy
+Edit
+@model SimpleResumeApp.Models.Resume
+
+<h1>@Model.Name</h1>
+<h3>@Model.Title</h3>
+<p>@Model.Summary</p>
+
+<h4>Skills</h4>
+<ul>
+@foreach (var skill in Model.Skills)
+{
+    <li>@skill</li>
+}
+</ul>
+🔹 Step 5: Set as Start Page (Optional)
+Open Properties > launchSettings.json, and change this:
+
+json
+Copy
+Edit
+"launchUrl": "Resume"
+Or navigate to /Resume in the browser manually.
+
+✅ Final Result
+Run the project. You’ll see a simple resume page showing:
+
+Name
+
+Title
+
+Summary
+
+Skills (as a list)

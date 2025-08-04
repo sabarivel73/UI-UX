@@ -1,0 +1,126 @@
+🔹 Step 1: Create the Project
+Open Visual Studio
+
+Create new project → ASP.NET Core Web App (Model-View-Controller)
+
+Name: SimpleHealthCarePortal
+
+Choose .NET 6.0 or later
+
+Click Create
+
+🔹 Step 2: Add Patient Model
+Right-click Models folder → Add → Class → Name it Patient.cs
+
+csharp
+Copy
+Edit
+namespace SimpleHealthCarePortal.Models
+{
+    public class Patient
+    {
+        public int Id { get; set; }  // Patient ID
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+}
+🔹 Step 3: Add a Controller
+Right-click Controllers → Add → Controller → Choose MVC Controller - Empty
+Name it: PatientController
+
+Paste this code:
+
+csharp
+Copy
+Edit
+using Microsoft.AspNetCore.Mvc;
+using SimpleHealthCarePortal.Models;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace SimpleHealthCarePortal.Controllers
+{
+    public class PatientController : Controller
+    {
+        // In-memory list to simulate a database
+        private static List<Patient> patients = new List<Patient>();
+
+        public IActionResult Index()
+        {
+            return View(patients);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Patient patient)
+        {
+            patient.Id = patients.Count + 1;
+            patients.Add(patient);
+            return RedirectToAction("Index");
+        }
+    }
+}
+🔹 Step 4: Create Views
+Create folder: Views > Patient
+
+➤ Index.cshtml (List patients)
+Right-click Views/Patient → Add → View → Name: Index.cshtml
+
+html
+Copy
+Edit
+@model List<SimpleHealthCarePortal.Models.Patient>
+
+<h2>Patient List</h2>
+<a href="/Patient/Create">Add New Patient</a>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Name</th><th>Age</th>
+    </tr>
+@foreach (var patient in Model)
+{
+    <tr>
+        <td>@patient.Id</td>
+        <td>@patient.Name</td>
+        <td>@patient.Age</td>
+    </tr>
+}
+</table>
+➤ Create.cshtml (Add patient form)
+Right-click Views/Patient → Add → View → Name: Create.cshtml
+
+html
+Copy
+Edit
+@model SimpleHealthCarePortal.Models.Patient
+
+<h2>Add Patient</h2>
+
+<form asp-action="Create" method="post">
+    <p>Name: <input asp-for="Name" /></p>
+    <p>Age: <input asp-for="Age" type="number" /></p>
+    <button type="submit">Save</button>
+</form>
+
+<a href="/Patient">Back to List</a>
+🔹 Step 5: Set Start Page (Optional)
+Open launchSettings.json (in Properties folder), and set:
+
+json
+Copy
+Edit
+"launchUrl": "Patient"
+Or just run and go to /Patient manually.
+
+✅ Done!
+Now run the project (Ctrl+F5):
+
+You can view the list of patients
+
+You can add a new patient
+
+No database is needed!
