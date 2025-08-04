@@ -1,4 +1,5 @@
 //npx create-react-app votingsystem
+//npm start
 import React,{Component} from 'react';
 import './App.css';
 
